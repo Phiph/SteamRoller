@@ -4,9 +4,9 @@
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Dapr.AspNetCore" Version="1.0.0" />
-    <PackageReference Include="ElectronNET.API" Version="11.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.1" />
+    <PackageReference Include="Dapr.AspNetCore" Version="1.2.0" />
+    <PackageReference Include="ElectronNET.API" Version="13.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.8" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SteamRoller.Core\SteamRoller.Core.csproj" />
