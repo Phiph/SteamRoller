@@ -1,4 +1,5 @@
 ﻿using Gameloop.Vdf.JsonConverter;
+using Microsoft.Extensions.DependencyInjection;
 using SteamRoller.Client.Services;
 using SteamRoller.Core;
 using System;
@@ -8,8 +9,26 @@ namespace SteamRollerConsole
 {
     class Program
     {
+        static void init()
+        {
+            var serviceCollection = new ServiceCollection();
+            ConfigureServices(serviceCollection);
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+        }
+
+        private static void ConfigureServices(IServiceCollection services)
+        {
+            services.AddLogging();
+            services.AddScoped<SteamLibrary, ISteamLibraryService>();
+        }
+
         static void Main(string[] args)
         {
+            init()
+
+
+
             SteamLibraryService steam = new SteamLibraryService();
 
             Console.WriteLine("The app has loaded, no flaky code yet.");
