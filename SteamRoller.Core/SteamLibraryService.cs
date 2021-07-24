@@ -10,10 +10,7 @@ using System.Threading.Tasks;
 
 namespace SteamRoller.Client.Services
 {
-
-
-
-
+  
 
     /// <summary>
     /// This service is heavily dependant on the Steam Base class. This implementation is currently OS specific to Windows OS. 
@@ -25,11 +22,11 @@ namespace SteamRoller.Client.Services
 
         public List<string> Locations = new List<string>();
 
-        private readonly ILogger<SteamLibraryService> _logger;
+     
 
-        public SteamLibraryService(ILogger<SteamLibraryService> logger)
+        public SteamLibraryService()
         {
-            _logger = logger;
+            
             Locations.Add(base.InstallPath);
             Library = new SteamLibrary();
             GetUserLibraries();

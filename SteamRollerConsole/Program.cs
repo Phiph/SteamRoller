@@ -1,5 +1,6 @@
 ﻿using Gameloop.Vdf.JsonConverter;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using SteamRoller.Client.Services;
 using SteamRoller.Core;
 using System;
@@ -9,25 +10,8 @@ namespace SteamRollerConsole
 {
     class Program
     {
-        static void init()
-        {
-            var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
-
-            var serviceProvider = serviceCollection.BuildServiceProvider();
-        }
-
-        private static void ConfigureServices(IServiceCollection services)
-        {
-            services.AddLogging();
-            services.AddScoped<SteamLibrary, ISteamLibraryService>();
-        }
-
         static void Main(string[] args)
         {
-            init()
-
-
 
             SteamLibraryService steam = new SteamLibraryService();
 
