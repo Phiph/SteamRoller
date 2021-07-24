@@ -32,8 +32,23 @@ namespace SteamRoller.API.Controllers
             IGameRoomActor serviceDutyResultsActor = ActorProxy.Create<IGameRoomActor>(actorId, "GameRoomActor");
             await serviceDutyResultsActor.AddPlayer(playerId);
 
+            return Ok(actorId);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> JoinRoom(string gameRoomId)
+        {
+            var playerId = Guid.NewGuid();
+            ActorId actorId = new ActorId(gameRoomId);
+            IGameRoomActor serviceDutyResultsActor = ActorProxy.Create<IGameRoomActor>(actorId, "GameRoomActor");
+           
+            
+            await serviceDutyResultsActor.AddPlayer(playerId);
+
+
             return Ok();
         }
-        
+
+
     }
 }

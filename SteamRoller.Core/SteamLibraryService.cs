@@ -1,5 +1,6 @@
 ﻿using Gameloop.Vdf;
 using Gameloop.Vdf.Linq;
+using Microsoft.Extensions.Logging;
 using SteamRoller.Core;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,25 @@ using System.Threading.Tasks;
 
 namespace SteamRoller.Client.Services
 {
+  
+
+    /// <summary>
+    /// This service is heavily dependant on the Steam Base class. This implementation is currently OS specific to Windows OS. 
+    /// 
+    /// Requires refactoring this is POC atm - cool it works!
+    /// </summary>
     public class SteamLibraryService : Steam
     {
         public SteamLibrary Library { get; set; }
 
 
         public List<string> Locations = new List<string>();
- 
 
+     
 
         public SteamLibraryService()
         {
-
+            
             Locations.Add(base.InstallPath);
             Library = new SteamLibrary();
             GetUserLibraries();
@@ -54,9 +62,18 @@ namespace SteamRoller.Client.Services
         {
             foreach (var metadatafile in Library.GameMetadata)
             {
-                dynamic volvo = VdfConvert.Deserialize(File.ReadAllText(metadatafile));
-                Game game = new Game { AppId = volvo.Value.appid.ToString(), Name = volvo.Value.name.ToString(), StateFlags = volvo.Value.StateFlags.ToString(), Platform = Platform.Steam };
-                Library.Games.Add(game);
+                try
+                {
+                    dynamic volvo = VdfConvert.Deserialize(File.ReadAllText(metadatafile));
+                    Game game = new Game { AppId = volvo.Value.appid.ToString(), Name = volvo.Value.name.ToString(), StateFlags = volvo.Value.StateFlags.ToString(), Platform = Platform.Steam };
+                    Library.Games.Add(game);
+                }
+                catch (Exception ex)
+                {
+
+                    
+                }
+                 
             }
         }
 
