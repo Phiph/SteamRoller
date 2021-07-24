@@ -14,6 +14,8 @@ namespace SteamRoller.Client.Services
 
     /// <summary>
     /// This service is heavily dependant on the Steam Base class. This implementation is currently OS specific to Windows OS. 
+    /// 
+    /// Requires refactoring this is POC atm - cool it works!
     /// </summary>
     public class SteamLibraryService : Steam
     {
