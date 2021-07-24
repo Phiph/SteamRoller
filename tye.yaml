@@ -1,0 +1,19 @@
+# tye application configuration file
+# read all about it at https://github.com/dotnet/tye
+#
+# when you've given us a try, we'd love to know what you think:
+#    https://aka.ms/AA7q20u
+#
+name: steamroller
+
+extensions:
+- name: dapr
+  log-level: debug
+
+services:
+- name: steamrollerconsole
+  project: SteamRollerConsole/SteamRollerConsole.csproj
+- name: steamroller-api
+  project: SteamRoller.API/SteamRoller.API.csproj
+
+
