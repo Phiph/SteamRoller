@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.2.0" />
-    <PackageReference Include="Dapr.AspNetCore" Version="1.2.0" />
+    <PackageReference Include="Dapr.Actors" Version="1.2.0" />
+    <PackageReference Include="Dapr.Client" Version="1.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.8" NoWarn="NU1605" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.8" NoWarn="NU1605" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SteamRoller.Actor.Interface\SteamRoller.Actor.Interface.csproj" />
     <ProjectReference Include="..\SteamRoller.Core\SteamRoller.Core.csproj" />
   </ItemGroup>
 

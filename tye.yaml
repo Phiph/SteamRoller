@@ -5,15 +5,20 @@
 #    https://aka.ms/AA7q20u
 #
 name: steamroller
-
 extensions:
+
+  # Configuration for dapr goes here.
 - name: dapr
-  log-level: debug
+  components: "./components"
 
 services:
-- name: steamrollerconsole
-  project: SteamRollerConsole/SteamRollerConsole.csproj
+# - name: steamrollerconsole
+#   project: SteamRollerConsole/SteamRollerConsole.csproj
+- name: steamroller-actors
+  project: SteamRoller.Actors/SteamRoller.Actors.csproj
+
+# - name: steamroller-client
+#   project: Electron/SteamRoller.Client/SteamRoller.Client.csproj
 - name: steamroller-api
   project: SteamRoller.API/SteamRoller.API.csproj
-
 

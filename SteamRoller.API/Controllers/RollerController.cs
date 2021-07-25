@@ -2,7 +2,7 @@
 using Dapr.Actors.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SteamRoller.API.Actors;
+using SteamRoller.Actors.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +21,17 @@ namespace SteamRoller.API.Controllers
         public RollerController(ILogger<RollerController> logger)
         {
             _logger = logger;
+         
         }
 
         [HttpGet]
         public async Task<IActionResult> CreateRoom()
         {
             var playerId = Guid.NewGuid();
-            ActorId actorId = new ActorId(Guid.NewGuid().ToString());
-
-            IGameRoomActor serviceDutyResultsActor = ActorProxy.Create<IGameRoomActor>(actorId, "GameRoomActor");
-            await serviceDutyResultsActor.AddPlayer(playerId);
+            ActorId actorId = ActorId.CreateRandom();
+            var proxy =  ActorProxy.Create<IGameRoomActor>(actorId, "GameRoomActor");
+            //var serviceDutyResultsActor = ActorProxy.Create<IGameRoomActor>(actorId, "GameRoomActor");
+            await proxy.AddPlayer(playerId);
 
             return Ok(actorId);
         }
@@ -40,7 +41,7 @@ namespace SteamRoller.API.Controllers
         {
             var playerId = Guid.NewGuid();
             ActorId actorId = new ActorId(gameRoomId);
-            IGameRoomActor serviceDutyResultsActor = ActorProxy.Create<IGameRoomActor>(actorId, "GameRoomActor");
+            IGameRoomActor serviceDutyResultsActor = ActorProxy.Create<IGameRoomActor>(actorId, "GameRoom");
            
             
             await serviceDutyResultsActor.AddPlayer(playerId);
