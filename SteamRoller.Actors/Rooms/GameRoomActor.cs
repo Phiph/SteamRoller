@@ -1,4 +1,5 @@
 ﻿using Dapr.Actors;
+using Dapr.Actors.Client;
 using Dapr.Actors.Runtime;
 using Microsoft.Extensions.Logging;
 using SteamRoller.Actors.Extensions;
@@ -66,7 +67,9 @@ namespace SteamRoller.Actors.Rooms
             List<PlayerInformation> playerData = new List<PlayerInformation>();
             foreach (var player in PlayerIds)
             {
-                List<Game> playerGames = new List<Game>();
+                ActorId actorId = new(player.ToString());
+                var proxy =  ActorProxy.Create<IPlayerActor>(actorId, "PlayerActor");
+                List<Game> playerGames = await proxy.ReadyToPlayGames();
                 //GetActiveGames
                 playerData.Add(new PlayerInformation { Id = player, Games = playerGames });
             }
@@ -76,6 +79,10 @@ namespace SteamRoller.Actors.Rooms
             var random = new Random();
             int index = random.Next(GameList.Count);
             return GameList[index];
+        }
+
+        public  Task<List<Guid>> GetPlayerList(){
+            return Task.FromResult(PlayerIds);
         }
 
 
