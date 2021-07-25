@@ -21,7 +21,6 @@ namespace SteamRoller.API.Controllers
         public RollerController(ILogger<RollerController> logger)
         {
             _logger = logger;
-         
         }
 
         [HttpGet]
@@ -41,7 +40,7 @@ namespace SteamRoller.API.Controllers
         {
             var playerId = Guid.NewGuid();
             ActorId actorId = new ActorId(gameRoomId);
-            IGameRoomActor serviceDutyResultsActor = ActorProxy.Create<IGameRoomActor>(actorId, "GameRoom");
+            IGameRoomActor serviceDutyResultsActor = ActorProxy.Create<IGameRoomActor>(actorId, "GameRoomActor");
            
             
             await serviceDutyResultsActor.AddPlayer(playerId);

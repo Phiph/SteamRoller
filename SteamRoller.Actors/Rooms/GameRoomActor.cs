@@ -40,6 +40,8 @@ namespace SteamRoller.Actors.Rooms
         {
             // Provides opportunity to perform some optional setup.
             Console.WriteLine($"Activating actor id: {this.Id}");
+
+            PlayerIds = new List<Guid>();
             return Task.CompletedTask;
         }
 
