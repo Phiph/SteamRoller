@@ -27,14 +27,7 @@ namespace SteamRoller.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddNewtonsoftJson()  .ConfigureApiBehaviorOptions(options =>
-    {
-        options.SuppressConsumesConstraintForFormFileParameters = true;
-        options.SuppressInferBindingSourcesForParameters = true;
-        options.SuppressModelStateInvalidFilter = true;
-        options.SuppressMapClientErrors = true;
-       
-    });;
+            services.AddControllers().AddNewtonsoftJson();
 
              //## NSwag
             services.AddOpenApiDocument(d => d.Title = "SteamRoller.API");

@@ -17,15 +17,32 @@ namespace SteamRoller.API.Client
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.12.1.0 (NJsonSchema v10.4.6.0 (Newtonsoft.Json v12.0.0.0))")]
-    public partial class PlayerClient 
+    public partial interface IPlayerClient
     {
-        private string _baseUrl = "";
-        private System.Net.Http.HttpClient _httpClient;
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<string> CreatePlayerAsync();
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<string> CreatePlayerAsync(System.Threading.CancellationToken cancellationToken);
+    
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<string> UploadLibraryAsync(string userId, SteamLibrary library);
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<string> UploadLibraryAsync(string userId, SteamLibrary library, System.Threading.CancellationToken cancellationToken);
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.12.1.0 (NJsonSchema v10.4.6.0 (Newtonsoft.Json v12.0.0.0))")]
+    public partial class PlayerClient : IPlayerClient
+    {
+        private SteamRoller.API.Client.IAuthenticatedHttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     
-        public PlayerClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public PlayerClient(SteamRoller.API.Client.IAuthenticatedHttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings);
         }
@@ -37,32 +54,26 @@ namespace SteamRoller.API.Client
             return settings;
         }
     
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
-        }
-    
         protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
     
         partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
     
     
-        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
-        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
-        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+        partial void PrepareRequest(SteamRoller.API.Client.IAuthenticatedHttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(SteamRoller.API.Client.IAuthenticatedHttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(SteamRoller.API.Client.IAuthenticatedHttpClient client, System.Net.Http.HttpResponseMessage response);
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<string> Player_CreatePlayerAsync()
+        public System.Threading.Tasks.Task<string> CreatePlayerAsync()
         {
-            return Player_CreatePlayerAsync(System.Threading.CancellationToken.None);
+            return CreatePlayerAsync(System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> Player_CreatePlayerAsync(System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<string> CreatePlayerAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Player/CreatePlayer");
+            urlBuilder_.Append("Player/CreatePlayer");
     
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -106,8 +117,12 @@ namespace SteamRoller.API.Client
                         else
                         if (status_ == 404)
                         {
-                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("A server side error occurred.", status_, responseText_, headers_, null);
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -130,20 +145,20 @@ namespace SteamRoller.API.Client
         }
     
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<string> Player_UploadLibraryAsync(string userId, SteamLibrary library)
+        public System.Threading.Tasks.Task<string> UploadLibraryAsync(string userId, SteamLibrary library)
         {
-            return Player_UploadLibraryAsync(userId, library, System.Threading.CancellationToken.None);
+            return UploadLibraryAsync(userId, library, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> Player_UploadLibraryAsync(string userId, SteamLibrary library, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<string> UploadLibraryAsync(string userId, SteamLibrary library, System.Threading.CancellationToken cancellationToken)
         {
             if (library == null)
                 throw new System.ArgumentNullException("library");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/{userId}");
+            urlBuilder_.Append("{userId}");
             urlBuilder_.Replace("{userId}", System.Uri.EscapeDataString(ConvertToString(userId, System.Globalization.CultureInfo.InvariantCulture)));
     
             var client_ = _httpClient;
@@ -191,8 +206,12 @@ namespace SteamRoller.API.Client
                         else
                         if (status_ == 404)
                         {
-                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("A server side error occurred.", status_, responseText_, headers_, null);
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -318,15 +337,46 @@ namespace SteamRoller.API.Client
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.12.1.0 (NJsonSchema v10.4.6.0 (Newtonsoft.Json v12.0.0.0))")]
-    public partial class RoomClient 
+    public partial interface IRoomClient
     {
-        private string _baseUrl = "";
-        private System.Net.Http.HttpClient _httpClient;
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<string> CreateAsync();
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<string> CreateAsync(System.Threading.CancellationToken cancellationToken);
+    
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<string> JoinRoomAsync(string gameRoomId, string playerId);
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<string> JoinRoomAsync(string gameRoomId, string playerId, System.Threading.CancellationToken cancellationToken);
+    
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<System.Guid>> GetPlayersAsync(string gameRoomId);
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<System.Guid>> GetPlayersAsync(string gameRoomId, System.Threading.CancellationToken cancellationToken);
+    
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<Game> PickGameAsync(string gameRoomId);
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<Game> PickGameAsync(string gameRoomId, System.Threading.CancellationToken cancellationToken);
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.12.1.0 (NJsonSchema v10.4.6.0 (Newtonsoft.Json v12.0.0.0))")]
+    public partial class RoomClient : IRoomClient
+    {
+        private SteamRoller.API.Client.IAuthenticatedHttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     
-        public RoomClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public RoomClient(SteamRoller.API.Client.IAuthenticatedHttpClient httpClient)
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings);
         }
@@ -338,32 +388,26 @@ namespace SteamRoller.API.Client
             return settings;
         }
     
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set { _baseUrl = value; }
-        }
-    
         protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
     
         partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
     
     
-        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
-        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
-        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+        partial void PrepareRequest(SteamRoller.API.Client.IAuthenticatedHttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(SteamRoller.API.Client.IAuthenticatedHttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(SteamRoller.API.Client.IAuthenticatedHttpClient client, System.Net.Http.HttpResponseMessage response);
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<string> Room_CreateAsync()
+        public System.Threading.Tasks.Task<string> CreateAsync()
         {
-            return Room_CreateAsync(System.Threading.CancellationToken.None);
+            return CreateAsync(System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> Room_CreateAsync(System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<string> CreateAsync(System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Room/Create");
+            urlBuilder_.Append("Room/Create");
     
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -425,17 +469,17 @@ namespace SteamRoller.API.Client
         }
     
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<string> Room_JoinRoomAsync(string gameRoomId, string playerId)
+        public System.Threading.Tasks.Task<string> JoinRoomAsync(string gameRoomId, string playerId)
         {
-            return Room_JoinRoomAsync(gameRoomId, playerId, System.Threading.CancellationToken.None);
+            return JoinRoomAsync(gameRoomId, playerId, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> Room_JoinRoomAsync(string gameRoomId, string playerId, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<string> JoinRoomAsync(string gameRoomId, string playerId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Room/JoinRoom?");
+            urlBuilder_.Append("Room/JoinRoom?");
             if (gameRoomId != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("gameRoomId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(gameRoomId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -489,8 +533,12 @@ namespace SteamRoller.API.Client
                         else
                         if (status_ == 404)
                         {
-                            string responseText_ = ( response_.Content == null ) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("A server side error occurred.", status_, responseText_, headers_, null);
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ProblemDetails>("A server side error occurred.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -513,17 +561,17 @@ namespace SteamRoller.API.Client
         }
     
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<System.Guid>> Room_GetPlayersAsync(string gameRoomId)
+        public System.Threading.Tasks.Task<System.Collections.Generic.ICollection<System.Guid>> GetPlayersAsync(string gameRoomId)
         {
-            return Room_GetPlayersAsync(gameRoomId, System.Threading.CancellationToken.None);
+            return GetPlayersAsync(gameRoomId, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<System.Guid>> Room_GetPlayersAsync(string gameRoomId, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<System.Guid>> GetPlayersAsync(string gameRoomId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Room/GetPlayers?");
+            urlBuilder_.Append("Room/GetPlayers?");
             if (gameRoomId != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("gameRoomId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(gameRoomId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -590,17 +638,17 @@ namespace SteamRoller.API.Client
         }
     
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Game> Room_PickGameAsync(string gameRoomId)
+        public System.Threading.Tasks.Task<Game> PickGameAsync(string gameRoomId)
         {
-            return Room_PickGameAsync(gameRoomId, System.Threading.CancellationToken.None);
+            return PickGameAsync(gameRoomId, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Game> Room_PickGameAsync(string gameRoomId, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Game> PickGameAsync(string gameRoomId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/Room/PickGame?");
+            urlBuilder_.Append("Room/PickGame?");
             if (gameRoomId != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("gameRoomId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(gameRoomId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -769,6 +817,39 @@ namespace SteamRoller.API.Client
         }
     }
 
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.4.6.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ProblemDetails 
+    {
+        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Type { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Title { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Status { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("detail", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Detail { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("instance", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Instance { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("extensions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IDictionary<string, object> Extensions { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.4.6.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class SteamLibrary 
     {
