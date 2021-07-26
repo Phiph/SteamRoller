@@ -17,7 +17,7 @@ namespace SteamRoller.Client.Services
     /// 
     /// Requires refactoring this is POC atm - cool it works!
     /// </summary>
-    public class SteamLibraryService : Steam
+    public class SteamLibraryService : Steam, ISteamLibraryService
     {
         public SteamLibrary Library { get; set; }
 
@@ -76,6 +76,12 @@ namespace SteamRoller.Client.Services
 
             }
         }
+
+    }
+
+    public interface ISteamLibraryService{
+
+        SteamLibrary Library {get;set;}
 
     }
 }

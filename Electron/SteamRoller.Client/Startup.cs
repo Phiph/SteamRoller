@@ -30,10 +30,12 @@ namespace SteamRoller.Client
             services.AddHttpContextAccessor();
             services.AddSingleton<IAuthenticatedHttpClient, AuthenticatedHttpClient>();
             // NSwag generated SDK client
+ 
+            services.AddSingleton<ISteamLibraryService,SteamLibraryService>();
            
             services.AddTransient<IPlayerClient, PlayerClient>();
             services.AddTransient<IRoomClient, RoomClient>();
-            services.AddSingleton<ISteamRollerService, SteamRollerService>();
+            services.AddTransient<ISteamRollerService, SteamRollerService>();
 
 
 

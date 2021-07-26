@@ -17,14 +17,14 @@ namespace SteamRoller.Client.Services
 
         private IPlayerClient _playerClient;
         private IRoomClient _roomClient;
-        SteamLibraryService steam;
-        public SteamRollerService(ILogger<SteamRollerService> logger, IMapper mapper, IPlayerClient playerClient, IRoomClient RoomClient)
+        ISteamLibraryService steam;
+        public SteamRollerService(ILogger<SteamRollerService> logger, IMapper mapper, IPlayerClient playerClient, IRoomClient RoomClient, ISteamLibraryService _steam)
         {
             _logger = logger;
             _mapper = mapper;
             _playerClient = playerClient;
             _roomClient = RoomClient;
-            steam = new SteamLibraryService();
+            steam = _steam;
         }
 
         public async Task<string> CreatePlayerId()
