@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"steamroller-actors","app.kubernetes.io/part-of":"steamroller"},"name":"steamroller-actors","namespace":"rollerservices"},"spec":{"ports":[{"name":"http","port":80,"protocol":"TCP","targetPort":80}],"selector":{"app.kubernetes.io/name":"steamroller-actors"},"type":"ClusterIP"}}
+  creationTimestamp: "2021-07-26T22:49:18Z"
+  labels:
+    app.kubernetes.io/name: steamroller-actors
+    app.kubernetes.io/part-of: steamroller
+  name: steamroller-actors
+  namespace: rollerservices
+  resourceVersion: "9049"
+  uid: d7022df0-a1bc-4d98-b2ab-9448a777c065
+spec:
+  clusterIP: 10.245.170.240
+  clusterIPs:
+  - 10.245.170.240
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app.kubernetes.io/name: steamroller-actors
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+helm install nginx-ingress ingress-nginx/ingress-nginx --namespace nginx --set controller.publishService.enabled=true
