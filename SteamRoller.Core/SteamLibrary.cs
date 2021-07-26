@@ -23,7 +23,7 @@ namespace SteamRoller.Core
 
         public List<Game> FilterBy(StateFlags GameState)
         {
-            return Games.Where(x => x.StateFlags == GameState.ToString()).ToList();
+            return Games.Where(x => x.StateFlags == ((int)GameState).ToString()).ToList();
         }
 
     }

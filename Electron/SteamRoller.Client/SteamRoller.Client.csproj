@@ -4,9 +4,12 @@
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Dapr.AspNetCore" Version="1.0.0" />
-    <PackageReference Include="ElectronNET.API" Version="11.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.1" />
+    <PackageReference Include="Dapr.AspNetCore" Version="1.2.0" />
+    <PackageReference Include="ElectronNET.API" Version="13.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.8" />
+    <PackageReference Include="Microsoft.Tye.Extensions.Configuration" Version="0.8.0-alpha.21352.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SteamRoller.Core\SteamRoller.Core.csproj" />

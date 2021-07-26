@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SteamRoller.Actor.Interface\SteamRoller.Actor.Interface.csproj" />
+    <ProjectReference Include="..\SteamRoller.Core\SteamRoller.Core.csproj" />
+	  <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.2.0" />
+  </ItemGroup>
+
+</Project>

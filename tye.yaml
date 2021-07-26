@@ -5,15 +5,47 @@
 #    https://aka.ms/AA7q20u
 #
 name: steamroller
-
 extensions:
+
+  # Configuration for dapr goes here.
 - name: dapr
+  # log-level configures the log level of the dapr sidecar
   log-level: debug
 
+  # config allows you to pass additional configuration into the dapr sidecar
+  # config will be interpreted as a named k8s resource when deployed, and will be interpreted as
+  # a file on disk when running locally at `./components/myconfig.yaml`
+  #
+  # config: myconfig
+
+  # components-path configures the components path of the dapr sidecar
+  components-path: "./components/"
+
+  # You can instruct Tye to not create the Dapr placement container on your behalf. This is required if you have Dapr running and want to use that container.
+  # Doing a `docker ps` can show if its already running. If it's running then you can set 'exclude-placement-container: true' with `placement-port: xxxx` set to the host port of that container.
+  # (i.e. In Windows + WSL2, Dapr uses 6050 as the host port)
+
+  exclude-placement-container: true
+  placement-port: 6050
+
 services:
-- name: steamrollerconsole
-  project: SteamRollerConsole/SteamRollerConsole.csproj
+# - name: steamrollerconsole
+#   project: SteamRollerConsole/SteamRollerConsole.csproj
+- name: steamroller-actors
+  project: SteamRoller.Actors/SteamRoller.Actors.csproj
+
 - name: steamroller-api
   project: SteamRoller.API/SteamRoller.API.csproj
+  bindings:
+  - port: 18789
+    name: http
+    protocol: http
+  - port: 18790
+    name: https
+    protocol: https 
 
 
+
+    
+- name: steamroller-client
+  project: Electron/SteamRoller.Client/SteamRoller.Client.csproj

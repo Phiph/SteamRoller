@@ -6,8 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using SteamRoller.API.Actors;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,15 +27,18 @@ namespace SteamRoller.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddDapr();
-            services.AddActors(options =>
-            {
-                options.Actors.RegisterActor<GameRoomActor>();
-            });
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SteamRoller.API", Version = "v1" });
-            });
+            services.AddControllers().AddNewtonsoftJson()  .ConfigureApiBehaviorOptions(options =>
+    {
+        options.SuppressConsumesConstraintForFormFileParameters = true;
+        options.SuppressInferBindingSourcesForParameters = true;
+        options.SuppressModelStateInvalidFilter = true;
+        options.SuppressMapClientErrors = true;
+       
+    });;
+
+             //## NSwag
+            services.AddOpenApiDocument(d => d.Title = "SteamRoller.API");
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,11 +47,15 @@ namespace SteamRoller.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SteamRoller.API v1"));
+                
             }
 
-            app.UseHttpsRedirection();
+            
+            //## NSwag
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
+
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -58,7 +64,6 @@ namespace SteamRoller.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapActorsHandlers();
             });
         }
     }

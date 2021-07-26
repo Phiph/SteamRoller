@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SteamRoller.API.Extensions
+namespace SteamRoller.Actors.Extensions
 {
     public static class ListExtensions
     {
