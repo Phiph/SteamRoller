@@ -62,7 +62,10 @@ namespace SteamRoller.Client
             });
 
             // Open the Electron-Window here
-            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
+            Task.Run(async () => {
+                await Electron.WindowManager.CreateWindowAsync();
+                await Electron.App.SetAsDefaultProtocolClientAsync("steamroller");
+                });
         }
     }
 }

@@ -41,9 +41,11 @@ namespace SteamRoller.Actors.Rooms
         {
             // Provides opportunity to perform some optional setup.
             Console.WriteLine($"Activating actor id: {this.Id}");
-
-            PlayerIds = new List<Guid>();
+            var availablestate = Task.Run(() =>  StateManager.TryGetStateAsync<List<Guid>>(StateName ) ).Result;
+            Logger.LogInformation($"Tried to Load RoomStateState: {this.Id}");
+            PlayerIds = availablestate.HasValue ? availablestate.Value : new();
             return Task.CompletedTask;
+
         }
 
         //AddnewUsers to the list
@@ -54,11 +56,21 @@ namespace SteamRoller.Actors.Rooms
 
         }
 
+        internal async Task  SaveState(){
+            await this.StateManager.SetStateAsync<List<Guid>>(StateName, PlayerIds);
+        }
+
 
         public async Task AddPlayer(Guid PlayerId)
         {
-            PlayerIds.Add(PlayerId);
-            Logger.LogInformation($"Game Room:{this.Id} added Player {PlayerId} ");
+            if(PlayerIds.Contains(PlayerId)){
+                Logger.LogInformation($"Game Room:{this.Id} Player {PlayerId}  already exists");
+            }
+            else{
+                PlayerIds.Add(PlayerId);
+                Logger.LogInformation($"Game Room:{this.Id} added Player {PlayerId} ");
+                await SaveState();
+            }
         }
 
 

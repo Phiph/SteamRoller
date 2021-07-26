@@ -39,9 +39,12 @@ namespace SteamRoller.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost]
         [Route("/{userId}")]
-        public async Task<IActionResult> UploadLibrary([FromBody] SteamLibrary library, [FromRoute] string userId )
+        public async Task<IActionResult> UploadLibrary([FromBody] SteamLibrary library, [FromRoute] string userId)
         {
-            ActorId actorId = new(userId);
+            if(library.Games.Count == 0){
+                return BadRequest("Empty Steam Library");
+            }
+            ActorId actorId =  new(userId);
             var proxy =  ActorProxy.Create<IPlayerActor>(actorId, "PlayerActor");
             await proxy.UploadLibrary(library);
             return Ok(actorId.GetId());            

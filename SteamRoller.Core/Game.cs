@@ -1,6 +1,6 @@
 ﻿namespace SteamRoller.Core
 {
-    public class Game
+    public record Game
     {
         public string AppId { get; set; }
 

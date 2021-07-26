@@ -18,6 +18,8 @@ namespace SteamRoller.API.Actors
 
         public SteamLibrary UserLibrary { get; set; }
 
+ 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DemoActor"/> class.
         /// </summary>
@@ -26,6 +28,7 @@ namespace SteamRoller.API.Actors
         public PlayerActor(ActorHost service)
             : base(service)
         {
+    
         }
 
         /// <summary>
@@ -44,10 +47,18 @@ namespace SteamRoller.API.Actors
             return Task.CompletedTask;
         }
 
+            // This method is called whenever an actor is deactivated after a period of inactivity.
+        protected override Task OnDeactivateAsync()
+        {
+              Logger.LogInformation($"Deactivating actor id: {this.Id}");
+            // Provides Opportunity to perform optional cleanup.
+            return Task.CompletedTask;
+        }
+
         public async Task UploadLibrary(SteamLibrary library)
         {
+            UserLibrary = library;
             await this.StateManager.SetStateAsync<SteamLibrary>(StateName, library);
-      
         }
 
         public async Task<List<Game>> ReadyToPlayGames()
