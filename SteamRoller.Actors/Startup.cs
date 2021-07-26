@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SteamRoller.Actors.Rooms;
+using SteamRoller.API.Actors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,9 @@ namespace SteamRoller.Actors
             {
                 // Register actor types and configure actor settings
                 options.Actors.RegisterActor<GameRoomActor>();
+                options.Actors.RegisterActor<PlayerActor>();
                 options.DrainRebalancedActors = true;
+             
             });
         }
 
@@ -36,7 +39,7 @@ namespace SteamRoller.Actors
 
             app.UseRouting();
 
-            //app.UseHttpsRedirection();
+            //app.UseHttpsRedirection(); 
 
             app.UseEndpoints(endpoints =>
             {

@@ -68,7 +68,7 @@ namespace SteamRoller.Actors.Rooms
             foreach (var player in PlayerIds)
             {
                 ActorId actorId = new(player.ToString());
-                var proxy =  ActorProxy.Create<IPlayerActor>(actorId, "PlayerActor");
+                var proxy = ActorProxy.Create<IPlayerActor>(actorId, "PlayerActor");
                 List<Game> playerGames = await proxy.ReadyToPlayGames();
                 //GetActiveGames
                 playerData.Add(new PlayerInformation { Id = player, Games = playerGames });
@@ -81,7 +81,8 @@ namespace SteamRoller.Actors.Rooms
             return GameList[index];
         }
 
-        public  Task<List<Guid>> GetPlayerList(){
+        public Task<List<Guid>> GetPlayerList()
+        {
             return Task.FromResult(PlayerIds);
         }
 

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SteamRoller.Client.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,11 @@ namespace SteamRoller.Client
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddRazorPages().AddSessionStateTempDataProvider();
+
+            services.AddAutoMapper(typeof(SteamLibraryProfile));
+
+            services.AddSession();
 
             services.AddElectron();
         }
@@ -43,9 +48,10 @@ namespace SteamRoller.Client
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -54,7 +60,7 @@ namespace SteamRoller.Client
             {
                 endpoints.MapRazorPages();
             });
-          
+
             // Open the Electron-Window here
             Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
         }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SteamRoller.Client.Services
 {
-  
+
 
     /// <summary>
     /// This service is heavily dependant on the Steam Base class. This implementation is currently OS specific to Windows OS. 
@@ -24,11 +24,11 @@ namespace SteamRoller.Client.Services
 
         public List<string> Locations = new List<string>();
 
-     
+
 
         public SteamLibraryService()
         {
-            
+
             Locations.Add(base.InstallPath);
             Library = new SteamLibrary();
             GetUserLibraries();
@@ -71,9 +71,9 @@ namespace SteamRoller.Client.Services
                 catch (Exception ex)
                 {
 
-                    
+
                 }
-                 
+
             }
         }
 

@@ -34,8 +34,6 @@ services:
 - name: steamroller-actors
   project: SteamRoller.Actors/SteamRoller.Actors.csproj
 
-- name: steamroller-client
-  project: Electron/SteamRoller.Client/SteamRoller.Client.csproj
 - name: steamroller-api
   project: SteamRoller.API/SteamRoller.API.csproj
   bindings:
@@ -45,3 +43,9 @@ services:
   - port: 18790
     name: https
     protocol: https 
+
+
+
+    
+- name: steamroller-client
+  project: Electron/SteamRoller.Client/SteamRoller.Client.csproj

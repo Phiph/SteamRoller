@@ -3,11 +3,48 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
+@using Microsoft.AspNetCore.Http;
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's privacy policy.</p>
+ 
 
-<img src="@string.Format("https://cdn.cloudflare.steamstatic.com/steam/apps/{0}/header.jpg", @Model.SelectedGame.AppId )" />
 
-<p>@Model.SelectedGame.Name</p>
+
+<img src="@string.Format("https://cdn.cloudflare.steamstatic.com/steam/apps/{0}/header.jpg", @Model?.SelectedGame?.AppId )" />
+
+<p>@Model?.SelectedGame?.Name</p>
+
+
+ 
+
+
+
+
+ 
+
+    
+<p>
+   
+    
+    <a asp-page-handler="CreatePlayer"> Create Player </a>
+
+      <label>
+        Player Id 
+        : @HttpContext.Session.GetString("PlayerId");
+    </label>
+</p>
+
+
+    
+<p>
+   
+    
+    <a asp-page-handler="UploadLibrary"> Upload Library </a>
+
+     
+</p>
+
+
+
+ 

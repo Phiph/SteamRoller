@@ -8,6 +8,7 @@ using SteamRoller.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace SteamRoller.API.Controllers
@@ -30,14 +31,15 @@ namespace SteamRoller.API.Controllers
         {
             ActorId actorId = ActorId.CreateRandom();
             var proxy =  ActorProxy.Create<IPlayerActor>(actorId, "PlayerActor");
-
-            return Ok(actorId.GetId());            
+            proxy.ReadyToPlayGames();
+            return Ok(actorId.GetId());             
         }
 
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost]
-        public async Task<IActionResult> UploadLibrary([FromBody]SteamLibrary library,string userId )
+        [Route("/{userId}")]
+        public async Task<IActionResult> UploadLibrary([FromBody] SteamLibrary library, [FromRoute] string userId )
         {
             ActorId actorId = new(userId);
             var proxy =  ActorProxy.Create<IPlayerActor>(actorId, "PlayerActor");
