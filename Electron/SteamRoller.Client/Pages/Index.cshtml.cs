@@ -47,9 +47,11 @@ namespace SteamRoller.Client.Pages
             Console.WriteLine($" you have {steam.Library.Games.Where(x => x.StateFlags == "4").Count()} state 4 (Ready to play)");
             Console.WriteLine($" you have {steam.Library.Games.Where(x => x.StateFlags == "6").Count()} state 6 (Update scheduled)");
 
+            var readytoPlay = steam.Library.FilterBy(StateFlags.Ready);
+
             var random = new Random();
-            int index = random.Next(steam.Library.Games.Count);
-            SelectedGame = steam.Library.Games[index];
+            int index = random.Next(readytoPlay.Count);
+            SelectedGame = readytoPlay[index];
             Console.WriteLine(SelectedGame.Name);
         }
 
