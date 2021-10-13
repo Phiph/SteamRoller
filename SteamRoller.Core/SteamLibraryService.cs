@@ -11,6 +11,13 @@ using System.Threading.Tasks;
 namespace SteamRoller.Client.Services
 {
 
+    public static class VdfExtensions
+    {
+        public static VToken GetValueIgnoreCase(this VToken obj, string key)
+        {
+            return obj.Children<VProperty>().First(x => x.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase)).Value;
+        }
+    }
 
     /// <summary>
     /// This service is heavily dependant on the Steam Base class. This implementation is currently OS specific to Windows OS. 
@@ -24,7 +31,7 @@ namespace SteamRoller.Client.Services
 
         public List<string> Locations = new List<string>();
 
-
+     
 
         public SteamLibraryService()
         {
@@ -40,10 +47,19 @@ namespace SteamRoller.Client.Services
             var libraryMetadataFile = $@"{InstallPath}\steamapps\libraryfolders.vdf";
             Console.WriteLine(libraryMetadataFile);
             VProperty folders = VdfConvert.Deserialize(File.ReadAllText(libraryMetadataFile));
-            foreach (VProperty item in folders.Value)
+
+       
+
+            foreach (VProperty item in folders.Value.Children())
             {
-                if (Path.IsPathFullyQualified(item.Value.ToString()))
-                    Locations.Add(item.Value.ToString());
+                if(item.Value.Children().Count() > 0)
+                {
+                    if (Path.IsPathFullyQualified(item.Value.GetValueIgnoreCase("path").ToString()))
+                    {
+                        Locations.Add(item.Value.GetValueIgnoreCase("path").ToString());
+                    }
+                }
+               
             }
         }
 
