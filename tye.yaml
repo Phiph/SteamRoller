@@ -8,6 +8,9 @@ name: steamroller
 
 registry: registry.digitalocean.com/infini-roller
 extensions:
+- name: seq
+  logPath: ./.logs
+
 
   # Configuration for dapr goes here.
 - name: dapr

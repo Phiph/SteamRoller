@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapr.Actors;
+using System.Diagnostics;
 
 namespace SteamRoller.Actors
 {
@@ -14,6 +15,7 @@ namespace SteamRoller.Actors
     {
         public static void Main(string[] args)
         {
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             CreateHostBuilder(args).Build().Run();
         }
 
