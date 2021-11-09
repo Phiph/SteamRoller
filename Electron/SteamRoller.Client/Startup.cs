@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SteamRoller.API.Client;
 using SteamRoller.Client.Mappings;
+using SteamRoller.Client.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,12 +27,29 @@ namespace SteamRoller.Client
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IAuthenticatedHttpClient, AuthenticatedHttpClient>();
+            // NSwag generated SDK client
+ 
+            services.AddSingleton<ISteamLibraryService,SteamLibraryService>();
+           
+            services.AddTransient<IPlayerClient, PlayerClient>();
+            services.AddTransient<IRoomClient, RoomClient>();
+            services.AddTransient<ISteamRollerService, SteamRollerService>();
+
+
+
+
             services.AddRazorPages().AddSessionStateTempDataProvider();
 
             services.AddAutoMapper(typeof(SteamLibraryProfile));
 
             services.AddSession();
 
+
+            
+
+          
             services.AddElectron();
         }
 

@@ -47,7 +47,7 @@ namespace SteamRoller.API.Controllers
 
             await serviceDutyResultsActor.AddPlayer(Guid.Parse(playerId));
 
-            return Ok();
+            return Ok(playerId);
         }
 
 

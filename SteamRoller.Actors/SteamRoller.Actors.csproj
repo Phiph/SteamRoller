@@ -7,7 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SteamRoller.Actor.Interface\SteamRoller.Actor.Interface.csproj" />
     <ProjectReference Include="..\SteamRoller.Core\SteamRoller.Core.csproj" />
-	  <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.2.0" />
+	  <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.4.0" />
   </ItemGroup>
 
 </Project>

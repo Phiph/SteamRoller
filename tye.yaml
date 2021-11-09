@@ -5,7 +5,12 @@
 #    https://aka.ms/AA7q20u
 #
 name: steamroller
+
+registry: registry.digitalocean.com/infini-roller
 extensions:
+- name: seq
+  logPath: ./.logs
+
 
   # Configuration for dapr goes here.
 - name: dapr
@@ -16,17 +21,17 @@ extensions:
   # config will be interpreted as a named k8s resource when deployed, and will be interpreted as
   # a file on disk when running locally at `./components/myconfig.yaml`
   #
-  # config: myconfig
+  config: daprconfig
 
   # components-path configures the components path of the dapr sidecar
-  components-path: "./components/"
+  #components-path: "./components/"
 
   # You can instruct Tye to not create the Dapr placement container on your behalf. This is required if you have Dapr running and want to use that container.
   # Doing a `docker ps` can show if its already running. If it's running then you can set 'exclude-placement-container: true' with `placement-port: xxxx` set to the host port of that container.
   # (i.e. In Windows + WSL2, Dapr uses 6050 as the host port)
 
-  exclude-placement-container: true
-  placement-port: 6050
+  # exclude-placement-container: true
+  # placement-port: 6050
 
 services:
 # - name: steamrollerconsole
@@ -47,5 +52,5 @@ services:
 
 
     
-- name: steamroller-client
-  project: Electron/SteamRoller.Client/SteamRoller.Client.csproj
+# - name: steamroller-client
+#   project: Electron/SteamRoller.Client/SteamRoller.Client.csproj

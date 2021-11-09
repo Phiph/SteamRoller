@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapr.Actors" Version="1.2.0" />
-    <PackageReference Include="Dapr.Client" Version="1.2.0" />
+    <PackageReference Include="Dapr.Actors" Version="1.4.0" />
+    <PackageReference Include="Dapr.Client" Version="1.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.8" NoWarn="NU1605" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.8" NoWarn="NU1605" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
@@ -26,11 +26,10 @@
     <ProjectReference Include="..\SteamRoller.Core\SteamRoller.Core.csproj" />
   </ItemGroup>
 
-<PropertyGroup>
-  <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-</PropertyGroup>
 
-<Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
+ 
+
+ <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
   <Message Importance="High" Text="$(NSwagExe_Net50) run nswag.nswag /variables:Configuration=$(Configuration)" />
 
   <Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net50) run nswag.nswag /variables:Configuration=$(Configuration)" />
