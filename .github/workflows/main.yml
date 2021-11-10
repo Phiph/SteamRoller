@@ -75,3 +75,37 @@ jobs:
         id: image-tag
         run: echo "::set-output name=image-${{ matrix.services.imageName }}::${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.services.imageName }}:sha-$(git rev-parse --short HEAD)" | tr '[:upper:]' '[:lower:]'
   
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: Azure/login@v1.4.0
+        with:
+          # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
+          creds: # optional
+          # ClientId of the Azure Service principal created.
+          client-id: # optional
+          # Azure subscriptionId
+          subscription-id: # optional
+ 
+      
+      
+
+      - name: Deploy bicep
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.29.2
+          inlineScript: |
+            az group create -g ${{ secrets.RESOURCE_GROUP }} -l europenorth
+            az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deployment/main.bicep \
+             -p \
+                minReplicas=0 \
+                actorImage='${{ needs.build.outputs.containerImage-actor-service }}' \
+                actorPort=80 \
+                containerRegistry=${{ env.REGISTRY }} \
+                containerRegistryUsername=${{ secrets.ACR_ADMINUSERNAME }} \
+                containerRegistryPassword=${{ secrets.ACR_PASSWORD }}
