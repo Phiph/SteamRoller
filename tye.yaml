@@ -37,10 +37,10 @@ services:
 # - name: steamrollerconsole
 #   project: SteamRollerConsole/SteamRollerConsole.csproj
 - name: steamroller-actors
-  project: SteamRoller.Actors/SteamRoller.Actors.csproj
+  project: src/Backend/SteamRoller.Actors/SteamRoller.Actors.csproj
 
 - name: steamroller-api
-  project: SteamRoller.API/SteamRoller.API.csproj
+  project: src/Backend/SteamRoller.API/SteamRoller.API.csproj
   bindings:
   - port: 18789
     name: http

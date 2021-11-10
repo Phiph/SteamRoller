@@ -1,0 +1,67 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@using Microsoft.AspNetCore.Http;
+<h1>@ViewData["Title"]</h1>
+
+<p>Welcome to Steam Roller</p> 
+
+
+<p>This is a fun way to find out what games you and your friends have installed and ready to play.</p>
+
+<h3>How it works?</h3>
+
+<p>1. The application scans your steam libraries and finds out which games you have installed, and ready to play.  </p>
+ 
+<p>2. The games you have are then uploaded to the server, so you can join rooms with your friends and let the rumble begin! </p>
+
+<p> I am a strong advocator of privacy and protection, I do not collect and Personal information and you are not identifiable. I do not even ask you to login. 
+    
+    It's all atomic (programming term)
+    
+    </p>
+
+
+    <a asp-area="" asp-page="/Play"><h2>Ready to Play?</h2></a>
+
+
+
+<img src="@string.Format("https://cdn.cloudflare.steamstatic.com/steam/apps/{0}/header.jpg", @Model?.SelectedGame?.AppId )" />
+
+<p>@Model?.SelectedGame?.Name</p>
+
+
+ 
+
+
+
+
+ 
+
+    
+<p>
+   
+    
+    <a asp-page-handler="CreatePlayer"> Create Player </a>
+
+      <label>
+        Player Id 
+        : @HttpContext.Session.GetString("PlayerId");
+    </label>
+</p>
+
+
+    
+<p>
+   
+    
+    <a asp-page-handler="UploadLibrary"> Upload Library </a>
+
+     
+</p>
+
+
+
+ 
