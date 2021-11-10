@@ -33,7 +33,7 @@ jobs:
       contents: read
       packages: write
     outputs:
-      containerImage-actor-service: ${{ steps.image-tag.outputs.image-actor-service }}
+      containerImage-actor: ${{ steps.image-tag.outputs.image-actor-service }}
       
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -93,7 +93,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-      
+        
 
       - name: Deploy bicep
         uses: azure/CLI@v1
@@ -104,7 +104,7 @@ jobs:
             az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deployment/main.bicep \
              -p \
                 minReplicas=0 \
-                actorImage='${{ needs.build.outputs.containerImage-actor-service }}' \
+                actorImage='${{ needs.build.outputs.containerImage-actor }}' \
                 actorPort=80 \
                 containerRegistry=${{ env.REGISTRY }} \
                 containerRegistryUsername=${{ secrets.ACR_ADMINUSERNAME }} \
