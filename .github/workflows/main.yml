@@ -95,7 +95,7 @@ jobs:
         with:
           azcliversion: 2.29.2
           inlineScript: |
-            az group create -g ${{ secrets.RESOURCE_GROUP }} -l europenorth
+            az group create -g ${{ secrets.RESOURCE_GROUP }} -l northeurope
             az deployment group create -g ${{ secrets.RESOURCE_GROUP }} -f ./deployment/main.bicep \
              -p \
                 minReplicas=0 \
