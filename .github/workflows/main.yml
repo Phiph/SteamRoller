@@ -29,6 +29,12 @@ jobs:
       matrix:
         services: [ {'imageName': 'actor-service', 'directory': './src/Backend/SteamRoller.Actors'}  ]
 
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      containerImage-actor-service: ${{ steps.image-tag.outputs.image-actor-service }}
+      
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -87,7 +93,8 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - run: |
-              az version
+              az version \
+              echo '${{ needs.build.outputs.containerImage-actor-service }}'
  
       
       
