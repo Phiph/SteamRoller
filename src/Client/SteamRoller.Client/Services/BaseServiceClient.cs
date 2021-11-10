@@ -11,8 +11,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace SteamRoller.API.Client
 {
-   
-
+  
     public class AuthenticatedHttpClient : HttpClient, IAuthenticatedHttpClient
     {
     

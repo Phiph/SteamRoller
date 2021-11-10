@@ -6,7 +6,7 @@
 	
 	<ItemGroup>
 	 	<PackageReference Include="Dapr.Actors" Version="1.4.0" />
-		<ProjectReference Include="..\SteamRoller.Core\SteamRoller.Core.csproj" />
+	 	<ProjectReference Include="..\..\SteamRoller.Core\SteamRoller.Core.csproj" />
 	</ItemGroup>
 	
  

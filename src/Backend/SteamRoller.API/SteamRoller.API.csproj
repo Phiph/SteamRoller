@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SteamRoller.Actor.Interface\SteamRoller.Actor.Interface.csproj" />
-    <ProjectReference Include="..\SteamRoller.Core\SteamRoller.Core.csproj" />
+    <ProjectReference Include="..\..\SteamRoller.Core\SteamRoller.Core.csproj" />
   </ItemGroup>
 
 
