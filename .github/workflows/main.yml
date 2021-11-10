@@ -38,7 +38,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
@@ -94,8 +95,9 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
     
       - run: |
-              echo needs.build.outputs.containerImage-actor
-          
+              echo '${{needs.build.outputs.containerImage-actor}}'
+      - run: |
+              echo '${{needs.build.outputs}'  
 
       - name: Deploy bicep
         uses: azure/CLI@v1
