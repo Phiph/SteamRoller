@@ -17,6 +17,7 @@ on:
 env:
   REGISTRY: infinireg.azurecr.io
   IMAGE_NAME: ${{ github.repository }}
+  poo: infinireg.azurecr.io
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -79,7 +80,7 @@ jobs:
       
       - name: Output image tag
         id: image-tag
-        run: echo "::set-output name=image-${{ matrix.services.imageName }}::${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.services.imageName }}:sha-$(git rev-parse --short HEAD)" | tr '[:upper:]' '[:lower:]'
+        run: echo "::set-output name=image-${{ matrix.services.imageName }}::${{ env.poo }}/${{ env.IMAGE_NAME }}/${{ matrix.services.imageName }}:sha-$(git rev-parse --short HEAD)" | tr '[:upper:]' '[:lower:]'
   
     outputs:
       containerImage-actor: ${{ steps.image-tag.outputs.image-actor-service }}
