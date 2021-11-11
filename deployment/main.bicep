@@ -112,13 +112,11 @@ module apiService 'container-http-nocomponent.bicep' = {
     containerRegistry: containerRegistry
     containerRegistryUsername: containerRegistryUsername
     containerRegistryPassword: containerRegistryPassword
-   
     secrets: [
       {
         name: 'docker-password'
         value: containerRegistryPassword
       }
-      
     ]
   }
 }

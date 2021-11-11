@@ -87,6 +87,7 @@ resource containerApp 'Microsoft.Web/containerApps@2021-03-01' = {
         enabled: true
         appPort: containerPort
         appId: containerAppName
+        components: daprComponents
       }
     }
   }
