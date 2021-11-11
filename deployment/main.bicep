@@ -8,6 +8,8 @@ param minReplicas int = 0
 param actorImage string = 'SteamRoller.Actors'
 param actorPort int = 80
 
+param apiImage string = 'SteamRoller.Actors'
+param apiPort int = 80
 
 param containerRegistry string
 param containerRegistryUsername string
@@ -16,8 +18,8 @@ param containerRegistryUsername string
 param containerRegistryPassword string
 
 var actorServiceAppName = 'actor-service-app'
-var pythonServiceAppName = 'python-app'
-var goServiceAppName = 'go-app'
+var apiServiceAppName = 'api-service-app'
+ 
 
 module law 'loganalytics.bicep' = {
     name: 'log-analytics-workspace'
@@ -92,6 +94,28 @@ module actorService 'container-http.bicep' = {
       {
         name: 'masterkey'
         value: redis.outputs.redisKey
+      }
+    ]
+  }
+}
+
+module apiService 'container-http.bicep' = {
+  name: apiServiceAppName
+  params: {
+    location: location
+    containerAppName: apiServiceAppName
+    environmentId: containerAppEnvironment.outputs.id
+    containerImage: apiImage
+    containerPort: apiPort
+    isExternalIngress: true
+    minReplicas: minReplicas
+    containerRegistry: containerRegistry
+    containerRegistryUsername: containerRegistryUsername
+    containerRegistryPassword: containerRegistryPassword
+    secrets: [
+      {
+        name: 'docker-password'
+        value: containerRegistryPassword
       }
     ]
   }
