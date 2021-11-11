@@ -9,7 +9,7 @@ param actorImage string = 'SteamRoller.Actors'
 param actorPort int = 80
 
 param apiImage string = 'SteamRoller.Actors'
-param apiPort int = 80
+param apiPort int = 443
 
 param containerRegistry string
 param containerRegistryUsername string
@@ -112,10 +112,39 @@ module apiService 'container-http.bicep' = {
     containerRegistry: containerRegistry
     containerRegistryUsername: containerRegistryUsername
     containerRegistryPassword: containerRegistryPassword
+    daprComponents: [
+      {
+        name: 'actorstateservice'
+        type: 'state.redis'
+        version: 'v1'
+        metadata: [
+          {
+            name: 'redisHost'
+            value: redis.outputs.redisHost
+          }
+          {
+            name: 'enableTLS'
+            value: 'true'
+          }
+          {
+            name: 'actorStateStore'
+            value: 'true'
+          }
+          {
+            name: 'redisPassword'
+            secretRef: 'masterkey'
+          }
+        ]
+      }
+    ]
     secrets: [
       {
         name: 'docker-password'
         value: containerRegistryPassword
+      }
+      {
+        name: 'masterkey'
+        value: redis.outputs.redisKey
       }
     ]
   }
