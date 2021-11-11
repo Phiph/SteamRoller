@@ -79,7 +79,7 @@ module actorService 'container-http.bicep' = {
           }
           {
             name: 'redisPassword'
-            secretRef: 'masterkey'
+            secretRef: redis.outputs.redisKey
           }
         ]
       }
