@@ -112,7 +112,6 @@ module apiService 'container-http.bicep' = {
     containerRegistry: containerRegistry
     containerRegistryUsername: containerRegistryUsername
     containerRegistryPassword: containerRegistryPassword
-    daprComponents: [   ]
     secrets: [
       {
         name: 'docker-password'
