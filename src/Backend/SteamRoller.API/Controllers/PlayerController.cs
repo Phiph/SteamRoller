@@ -29,9 +29,17 @@ namespace SteamRoller.API.Controllers
         [HttpGet]
         public  IActionResult CreatePlayer()
         {
+            _logger.LogInformation("Creating new Player");
             ActorId actorId = ActorId.CreateRandom();
-            var proxy =  ActorProxy.Create<IPlayerActor>(actorId, "PlayerActor");
-            proxy.ReadyToPlayGames();
+            try
+            {
+                var proxy = ActorProxy.Create<IPlayerActor>(actorId, "PlayerActor");
+                proxy.ReadyToPlayGames();
+            }
+            catch (Exception e)
+            {
+               _logger.LogError(e,"Failed to create player");
+            }
             return Ok(actorId.GetId());             
         }
 
