@@ -67,7 +67,7 @@ module actorService 'container-http.bicep' = {
         metadata: [
           {
             name: 'redisHost'
-            value: redis.outputs.redisHost:6380
+            value: redis.outputs.redisHost
           }
           {
             name: 'enableTLS'
