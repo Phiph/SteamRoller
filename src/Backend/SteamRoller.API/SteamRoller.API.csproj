@@ -5,6 +5,7 @@
     <UserSecretsId>01e335e9-a584-4902-a974-9cd7fb8cb559</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
