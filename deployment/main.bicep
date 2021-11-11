@@ -112,40 +112,13 @@ module apiService 'container-http.bicep' = {
     containerRegistry: containerRegistry
     containerRegistryUsername: containerRegistryUsername
     containerRegistryPassword: containerRegistryPassword
-    daprComponents: [
-      {
-        name: 'actorstateservice'
-        type: 'state.redis'
-        version: 'v1'
-        metadata: [
-          {
-            name: 'redisHost'
-            value: redis.outputs.redisHost
-          }
-          {
-            name: 'enableTLS'
-            value: 'true'
-          }
-          {
-            name: 'actorStateStore'
-            value: 'true'
-          }
-          {
-            name: 'redisPassword'
-            secretRef: 'masterkey'
-          }
-        ]
-      }
-    ]
+   
     secrets: [
       {
         name: 'docker-password'
         value: containerRegistryPassword
       }
-      {
-        name: 'masterkey'
-        value: redis.outputs.redisKey
-      }
+      
     ]
   }
 }
