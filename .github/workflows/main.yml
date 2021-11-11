@@ -95,10 +95,6 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
     
-      - run: |
-              echo '${{needs.build.outputs.containerImage-actor}}'
-      - run: |
-              echo '${{needs.build.outputs}}'  
       - name: Deploy bicep
         uses: azure/CLI@v1
         with:

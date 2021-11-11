@@ -25,6 +25,5 @@ resource redis 'Microsoft.Cache/redis@2020-12-01' = {
   }
 }
 
-
 output redisHost string = redis.properties.hostName
 output redisKey string = redis.properties.accessKeys.primaryKey
