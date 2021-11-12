@@ -99,7 +99,7 @@ module actorService 'container-http.bicep' = {
   }
 }
 
-module apiService 'container-http-nocomponent.bicep' = {
+module apiService 'container-http.bicep' = {
   name: apiServiceAppName
   params: {
     location: location
