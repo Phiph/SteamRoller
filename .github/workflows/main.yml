@@ -107,7 +107,7 @@ jobs:
                 actorImage='${{ needs.build.outputs.containerImage-actor }}' \
                 actorPort=80 \
                 apiImage='${{ needs.build.outputs.containerImage-api }}' \
-                apiPort=443 \
+                apiPort=80 \
                 containerRegistry=${{ env.REGISTRY }} \
                 containerRegistryUsername=${{ github.actor }} \
                 containerRegistryPassword=${{ secrets.PACKAGES_TOKEN }}
