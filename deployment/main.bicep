@@ -57,7 +57,7 @@ module actorService 'container-http.bicep' = {
     containerImage: actorImage
     containerPort: actorPort
     isExternalIngress: false
-    minReplicas: minReplicas
+    minReplicas: 1
     containerRegistry: containerRegistry
     containerRegistryUsername: containerRegistryUsername
     containerRegistryPassword: containerRegistryPassword
